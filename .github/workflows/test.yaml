@@ -1,0 +1,21 @@
+name: Action
+
+on:
+  pull_request:
+    branches: 
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Continuous Integration
+        run: |
+          docker build . -t ${{ secrets.DOCKER_USERNAME }}/mc_g:latest
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          docker run -p 8000:8000 ${{ secrets.DOCKER_USERNAME }}/mc_g:latest
+          curl localhost:8000/addition?x=10&y=10
