@@ -16,3 +16,8 @@ def soustraction(x: int, y: int):
 @app.get("/multiplication")
 def multiplication(x: int, y: int):
     return x * y
+
+
+@app.get("division")
+def division(x: int, y: int):
+    return x / y
