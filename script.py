@@ -11,3 +11,8 @@ def addition(x: int, y: int):
 @app.get("/soustraction")
 def soustraction(x: int, y: int):
     return x - y
+
+
+@app.get("/multiplication")
+def multiplication(x: int, y: int):
+    return x * y
