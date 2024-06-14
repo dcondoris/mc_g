@@ -15,6 +15,6 @@ jobs:
           fetch-depth: 0
       - name: Continuous Integration
         run: |
-          docker build . -t dcondoris950/mc_g:latest
-          docker login -u dcondoris950 -p testvm1234
-          docker push dcondoris950/mc_g:latest
+          docker build . -t {{ secrets.DOCKER_USERNAME }}/mc_g:latest
+          docker login -u {{ secrets.DOCKER_USERNAME }} -p {{ secrets.DOCKER_PASSWORD }}
+          docker push {{ secrets.DOCKER_USERNAME }}/mc_g:latest
