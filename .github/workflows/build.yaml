@@ -1,0 +1,20 @@
+name: Action
+
+on:
+  push:
+    branches: 
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Continuous Integration
+        run: |
+          docker build . -t dcondoris950/mc_g:latest
+          docker login -u dcondoris950 -p testvm1234
+          docker push dcondoris950/mc_g:latest
