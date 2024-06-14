@@ -18,3 +18,15 @@ jobs:
           docker build . -t ${{ secrets.DOCKER_USERNAME }}/mc_g:latest
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
           docker push ${{ secrets.DOCKER_USERNAME }}/mc_g:latest
+      - name: Continuous Deployment
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          script: |
+            docker container stop masterclass_api
+            docker container rm masterclass_api
+            docker pull ${{ secrets.DOCKER_USERNAME }}/mc_g:latest
+            docker run --name masterclass_api -d -p 8000:8000 ${{ secrets.DOCKER_USERNAME }}/mc_g:latest
